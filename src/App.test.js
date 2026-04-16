@@ -1,8 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+jest.mock('./lib/supabase', () => ({
+  hasSupabaseConfig: false,
+  supabase: null,
+}));
+
+test('renders auth screen when not signed in', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText('Continue with your calm space.')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Welcome back' })).toBeInTheDocument();
 });
